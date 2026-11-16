@@ -1,21 +1,142 @@
-<ion-header [translucent]="true">
+<ion-header class="main-header">
   <ion-toolbar>
-    <ion-title> Blank </ion-title>
+    <div class="header-content">
+      <div class="brand">
+        <div class="brand-icon">N</div>
+        <span>NEXO<span class="brand-highlight">TECH</span></span>
+      </div>
+
+      <ion-button fill="clear" class="cart-button">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
-  </div>
+  <main class="home-container">
+
+    <!-- Carrossel principal -->
+    <section class="hero-section">
+
+      @for (banner of banners; track $index) {
+        @if (slideAtual === $index) {
+          <div class="hero-content">
+
+            <span class="hero-tag">
+              {{ banner.subtitulo }}
+            </span>
+
+            <h1>
+              {{ banner.titulo }}
+            </h1>
+
+            <p>
+              {{ banner.descricao }}
+            </p>
+
+            <ion-button class="hero-button">
+              {{ banner.botao }}
+              <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+
+          </div>
+        }
+      }
+
+      <div class="hero-decoration">
+        <ion-icon name="hardware-chip-outline"></ion-icon>
+      </div>
+
+      <!-- Navegação -->
+      <div class="carousel-controls">
+
+        <ion-button fill="clear" class="carousel-arrow" (click)="slideAnterior()">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-button>
+
+        <div class="carousel-indicators">
+          @for (banner of banners; track $index) {
+            <button
+              class="indicator"
+              [class.active]="slideAtual === $index"
+              (click)="selecionarSlide($index)">
+            </button>
+          }
+        </div>
+
+        <ion-button fill="clear" class="carousel-arrow" (click)="proximoSlide()">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+
+      </div>
+
+    </section>
+
+    <!-- Categorias -->
+    <section class="categories-section">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-subtitle">EXPLORE NOSSA LOJA</span>
+          <h2>Categorias</h2>
+        </div>
+      </div>
+
+      <div class="categories-grid">
+
+        <div class="category-card">
+          <ion-icon name="laptop-outline"></ion-icon>
+          <h3>Notebooks</h3>
+          <span>Desempenho e produtividade</span>
+        </div>
+
+        <div class="category-card">
+          <ion-icon name="phone-portrait-outline"></ion-icon>
+          <h3>Smartphones</h3>
+          <span>Tecnologia na sua mão</span>
+        </div>
+
+        <div class="category-card">
+          <ion-icon name="tablet-portrait-outline"></ion-icon>
+          <h3>Tablets</h3>
+          <span>Versatilidade e mobilidade</span>
+        </div>
+
+        <div class="category-card">
+          <ion-icon name="headset-outline"></ion-icon>
+          <h3>Acessórios</h3>
+          <span>Complete sua experiência</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Destaques -->
+    <section class="featured-section">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-subtitle">SELEÇÃO NEXO TECH</span>
+          <h2>Produtos em destaque</h2>
+        </div>
+
+        <span class="coming-soon">EM BREVE</span>
+      </div>
+
+      <div class="featured-placeholder">
+        <ion-icon name="cube-outline"></ion-icon>
+        <h3>Novidades chegando!</h3>
+        <p>
+          Estamos preparando uma seleção especial de produtos
+          para você.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
 </ion-content>

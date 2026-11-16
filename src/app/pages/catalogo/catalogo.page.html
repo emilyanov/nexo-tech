@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Catálogo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <main class="catalogo-container">
+
+    <section class="catalogo-header">
+      <span class="section-tag">NEXO TECH</span>
+      <h1>Nosso catálogo</h1>
+      <p>Encontre a tecnologia ideal para você.</p>
+    </section>
+
+    <section class="catalogo-filtros">
+
+      <div class="pesquisa-container">
+        <input
+          type="text"
+          placeholder="Pesquisar produtos..."
+          [(ngModel)]="termoPesquisa"
+          (keyup.enter)="pesquisarProdutos()"
+        >
+
+        <button (click)="pesquisarProdutos()">
+          Pesquisar
+        </button>
+      </div>
+
+      <div class="categorias-container">
+        @for (categoria of categorias; track categoria.valor) {
+          <button
+            [class.ativa]="categoriaAtual === categoria.valor && !termoPesquisa"
+            (click)="selecionarCategoria(categoria.valor)"
+          >
+            {{ categoria.nome }}
+          </button>
+        }
+      </div>
+
+    </section>
+
+    @if (carregando) {
+      <div class="mensagem-estado">
+        <p>Carregando produtos...</p>
+      </div>
+    }
+
+    @if (erro) {
+      <div class="mensagem-estado erro">
+        <p>{{ erro }}</p>
+        <button (click)="carregarProdutos()">Tentar novamente</button>
+      </div>
+    }
+
+    @if (!carregando && !erro && produtos.length > 0) {
+      <section class="produtos-grid">
+
+        @for (produto of produtos; track produto.id) {
+          <article
+            class="produto-card"
+            [routerLink]="['/produto', produto.id]"
+          >
+
+            <div class="produto-imagem">
+              <img
+                [src]="produto.thumbnail"
+                [alt]="produto.title"
+              >
+            </div>
+
+            <div class="produto-info">
+
+              <span class="produto-categoria">
+                {{ produto.category }}
+              </span>
+
+              <h2>{{ produto.title }}</h2>
+
+              <p class="produto-avaliacao">
+                ★ {{ produto.rating }}
+              </p>
+
+              <p class="produto-preco">
+                {{ produto.price | currency:'USD':'symbol':'1.2-2' }}
+              </p>
+
+            </div>
+
+          </article>
+        }
+
+      </section>
+    }
+
+    @if (!carregando && !erro && produtos.length === 0) {
+      <div class="mensagem-estado">
+        <p>Nenhum produto encontrado.</p>
+      </div>
+    }
+
+  </main>
+
+</ion-content>

@@ -1,37 +1,97 @@
 /*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+ * NEXO TECH - ESTILOS GLOBAIS
  */
 
-/* Core CSS required for Ionic components to work properly */
+/* Core CSS do Ionic */
 @import "@ionic/angular/css/core.css";
 
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Tema escuro */
+@import "@ionic/angular/css/palettes/dark.always.css";
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Configurações gerais */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0b1120;
+  color: #f8fafc;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  min-height: 100%;
+}
+
+ion-app {
+  background: #0b1120;
+}
+
+/* Conteúdo das páginas */
+ion-content {
+  --background: #0b1120;
+  --color: #f8fafc;
+}
+
+/* Cabeçalhos */
+ion-toolbar {
+  --background: #0b1120;
+  --color: #f8fafc;
+  --border-color: #263449;
+}
+
+ion-title {
+  font-weight: 700;
+}
+
+/* Cartões */
+ion-card {
+  --background: #151f32;
+  --color: #f8fafc;
+  margin: 0;
+  border: 1px solid #263449;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+/* Botões */
+ion-button {
+  --border-radius: 10px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* Campos de entrada */
+ion-input,
+ion-searchbar {
+  --background: #151f32;
+  --color: #f8fafc;
+  --placeholder-color: #94a3b8;
+  --border-radius: 10px;
+}
+
+/* Links */
+a {
+  color: #22d3ee;
+  text-decoration: none;
+}
+
+/* Seleção de texto */
+::selection {
+  background: #2563eb;
+  color: #ffffff;
+}

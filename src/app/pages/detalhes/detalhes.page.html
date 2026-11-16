@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/catalogo"
+        text="Voltar"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Detalhes do produto</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <main class="detalhes-container">
+
+    @if (carregando) {
+      <div class="mensagem-estado">
+        <p>Carregando detalhes do produto...</p>
+      </div>
+    }
+
+    @if (erro) {
+      <div class="mensagem-estado erro">
+        <p>{{ erro }}</p>
+      </div>
+    }
+
+    @if (produto; as item) {
+
+      <section class="produto-detalhes">
+
+        <div class="produto-imagem">
+          <img
+            [src]="item.thumbnail"
+            [alt]="item.title"
+          >
+        </div>
+
+        <div class="produto-informacoes">
+
+          <span class="produto-categoria">
+            {{ item.category }}
+          </span>
+
+          <h1>{{ item.title }}</h1>
+
+          <p class="produto-avaliacao">
+            ★ {{ item.rating }} / 5
+          </p>
+
+          <p class="produto-descricao">
+            {{ item.description }}
+          </p>
+
+          <div class="produto-preco">
+            {{ item.price | currency:'USD':'symbol':'1.2-2' }}
+          </div>
+
+          <div class="produto-extra">
+
+            <p>
+              <strong>Marca:</strong>
+              {{ item.brand || 'Não informada' }}
+            </p>
+
+            <p>
+              <strong>Estoque:</strong>
+              {{ item.stock }} unidades
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    }
+
+  </main>
+
+</ion-content>
