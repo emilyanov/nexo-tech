@@ -1,0 +1,174 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-content {
+  --background: #0b1120;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #0b1120;
+    --color: #f8fafc;
+    --border-color: #263449;
+  }
+}
+
+.confirmacao-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 50px 20px;
+}
+
+.confirmacao-card {
+  width: 100%;
+  max-width: 620px;
+  padding: 50px 40px;
+  background: #151f32;
+  border: 1px solid #263449;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.confirmacao-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 28px;
+  color: #0b1120;
+  background: #22d3ee;
+  border-radius: 50%;
+  font-size: 48px;
+  font-weight: 800;
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+}
+
+.section-tag {
+  color: #22d3ee;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.confirmacao-card h1 {
+  margin: 16px 0 12px;
+  color: #f8fafc;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.mensagem {
+  margin: 0 0 35px;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.pedido-info {
+  padding: 20px 25px;
+  background: #0b1120;
+  border: 1px solid #263449;
+  border-radius: 14px;
+}
+
+.pedido-info div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 17px 0;
+  border-bottom: 1px solid #263449;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.pedido-info span {
+  color: #94a3b8;
+  font-size: 14px;
+  text-align: left;
+}
+
+.pedido-info strong {
+  color: #22d3ee;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.aviso {
+  margin: 25px 0;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.voltar-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  color: #0b1120;
+  background: #22d3ee;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: 0.25s;
+
+  &:hover {
+    background: #67e8f9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34, 211, 238, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 550px) {
+  .confirmacao-container {
+    padding: 30px 15px;
+  }
+
+  .confirmacao-card {
+    padding: 35px 20px;
+  }
+
+  .confirmacao-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
+  }
+
+  .confirmacao-card h1 {
+    font-size: 27px;
+  }
+
+  .mensagem {
+    font-size: 14px;
+  }
+
+  .pedido-info {
+    padding: 15px 18px;
+  }
+
+  .pedido-info div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pedido-info strong {
+    text-align: left;
+  }
+}

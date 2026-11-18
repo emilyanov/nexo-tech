@@ -1,17 +1,24 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar
+  IonContent
 } from '@ionic/angular';
 
 import { ProdutosService } from '../../services/produtos.service';
+import { CarrinhoService } from '../../services/carrinho.service';
 import { Produto } from '../../models/produto.model';
+import { CabecalhoComponent } from '../../components/cabecalho/cabecalho.component';
+import { RodapeComponent } from '../../components/rodape/rodape.component';
+
+import { TruncatePipe } from '../../pipes/truncate-pipe';
+import { CategoriaPipe } from '../../pipes/categoria-pipe';
+import { MoedaRealPipe } from '../../pipes/moeda-real-pipe';
+
+import { DestaqueOfertaDirective } from '../../directives/destaque-oferta';
+import { EstoqueDirective } from '../../directives/estoque';
 
 @Component({
   selector: 'app-catalogo',
@@ -19,12 +26,16 @@ import { Produto } from '../../models/produto.model';
   styleUrls: ['./catalogo.page.scss'],
   imports: [
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
     CommonModule,
     FormsModule,
-    RouterLink
+    RouterLink,
+    CabecalhoComponent,
+    RodapeComponent,
+    TruncatePipe,
+    CategoriaPipe,
+    MoedaRealPipe,
+    DestaqueOfertaDirective,
+    EstoqueDirective
   ],
 })
 export class CatalogoPage implements OnInit {
@@ -45,11 +56,26 @@ export class CatalogoPage implements OnInit {
 
   constructor(
     private produtosService: ProdutosService,
-    private cdr: ChangeDetectorRef
+    private carrinhoService: CarrinhoService,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.carregarProdutos();
+    this.route.queryParamMap.subscribe(params => {
+      const categoria = params.get('categoria');
+
+      const categoriaValida = this.categorias.some(
+        item => item.valor === categoria
+      );
+
+      this.categoriaAtual = categoriaValida
+        ? categoria!
+        : 'laptops';
+
+      this.termoPesquisa = '';
+      this.carregarProdutos();
+    });
   }
 
   carregarProdutos() {
@@ -104,4 +130,10 @@ export class CatalogoPage implements OnInit {
       }
     });
   }
+
+  adicionarAoCarrinho(produto: Produto) {
+    this.carrinhoService.adicionarProduto(produto);
+    alert('Produto adicionado ao carrinho!');
+  }
+
 }

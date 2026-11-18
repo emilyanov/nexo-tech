@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pedido confirmado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <main class="confirmacao-container">
+
+    <section class="confirmacao-card">
+
+      <div class="confirmacao-icon">
+        ✓
+      </div>
+
+      <span class="section-tag">NEXO TECH</span>
+
+      <h1>Pedido confirmado!</h1>
+
+      <p class="mensagem">
+        Sua compra foi registrada com sucesso.
+      </p>
+
+      <div class="pedido-info">
+
+        <div>
+          <span>Número do pedido</span>
+          <strong>#{{ numeroPedido }}</strong>
+        </div>
+
+        <div>
+          <span>Data da compra</span>
+          <strong>
+            {{ dataCompra | date:'dd/MM/yyyy HH:mm' }}
+          </strong>
+        </div>
+
+        <div>
+          <span>Quantidade de itens</span>
+          <strong>{{ quantidadeItens }}</strong>
+        </div>
+
+        <div>
+          <span>Total da compra</span>
+          <strong>
+            {{ totalCompra | currency:'USD':'symbol':'1.2-2' }}
+          </strong>
+        </div>
+
+      </div>
+
+      <p class="aviso">
+        Esta compra é uma simulação para fins acadêmicos.
+      </p>
+
+      <a routerLink="/catalogo" class="voltar-button">
+        Voltar ao catálogo
+      </a>
+
+    </section>
+
+  </main>
+
+</ion-content>

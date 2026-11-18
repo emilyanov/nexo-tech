@@ -1,22 +1,23 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Catálogo</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-cabecalho></app-cabecalho>
 
 <ion-content [fullscreen]="true">
 
   <main class="catalogo-container">
 
     <section class="catalogo-header">
+
       <span class="section-tag">NEXO TECH</span>
+
       <h1>Nosso catálogo</h1>
+
       <p>Encontre a tecnologia ideal para você.</p>
+
     </section>
 
     <section class="catalogo-filtros">
 
       <div class="pesquisa-container">
+
         <input
           type="text"
           placeholder="Pesquisar produtos..."
@@ -24,83 +25,195 @@
           (keyup.enter)="pesquisarProdutos()"
         >
 
-        <button (click)="pesquisarProdutos()">
+        <button
+          type="button"
+          (click)="pesquisarProdutos()">
+
           Pesquisar
+
         </button>
+
       </div>
 
       <div class="categorias-container">
+
         @for (categoria of categorias; track categoria.valor) {
+
           <button
+            type="button"
             [class.ativa]="categoriaAtual === categoria.valor && !termoPesquisa"
-            (click)="selecionarCategoria(categoria.valor)"
-          >
+            (click)="selecionarCategoria(categoria.valor)">
+
             {{ categoria.nome }}
+
           </button>
+
         }
+
       </div>
 
     </section>
 
+    @if (!carregando && !erro && produtos.length > 0) {
+
+      <section class="resultados-header">
+
+        <div>
+
+          <span class="resultados-label">NOSSA SELEÇÃO</span>
+
+          <h2>
+            {{ termoPesquisa ? 'Resultados da pesquisa' : 'Produtos disponíveis' }}
+          </h2>
+
+        </div>
+
+        <span class="contador-produtos">
+          {{ produtos.length }}
+          {{ produtos.length === 1 ? 'produto encontrado' : 'produtos encontrados' }}
+        </span>
+
+      </section>
+
+    }
+
     @if (carregando) {
+
       <div class="mensagem-estado">
-        <p>Carregando produtos...</p>
+
+        <div class="estado-icone">⌛</div>
+
+        <h2>Carregando produtos...</h2>
+
+        <p>Estamos buscando as melhores opções para você.</p>
+
       </div>
+
     }
 
     @if (erro) {
+
       <div class="mensagem-estado erro">
+
+        <div class="estado-icone">!</div>
+
+        <h2>Não foi possível carregar os produtos.</h2>
+
         <p>{{ erro }}</p>
-        <button (click)="carregarProdutos()">Tentar novamente</button>
+
+        <button
+          type="button"
+          (click)="carregarProdutos()">
+
+          Tentar novamente
+
+        </button>
+
       </div>
+
     }
 
     @if (!carregando && !erro && produtos.length > 0) {
+
       <section class="produtos-grid">
 
         @for (produto of produtos; track produto.id) {
+
           <article
             class="produto-card"
             [routerLink]="['/produto', produto.id]"
-          >
+            [appDestaqueOferta]="produto.discountPercentage">
 
             <div class="produto-imagem">
+
+              @if (produto.discountPercentage > 0) {
+
+                <span class="produto-oferta">
+                  -{{ produto.discountPercentage | number:'1.0-0' }}%
+                </span>
+
+              }
+
               <img
                 [src]="produto.thumbnail"
                 [alt]="produto.title"
+                loading="lazy"
               >
+
             </div>
 
             <div class="produto-info">
 
               <span class="produto-categoria">
-                {{ produto.category }}
+                {{ produto.category | categoria }}
               </span>
 
-              <h2>{{ produto.title }}</h2>
+              <h2>
+                {{ produto.title | truncate:40 }}
+              </h2>
 
               <p class="produto-avaliacao">
-                ★ {{ produto.rating }}
+                <span>★</span>
+                {{ produto.rating | number:'1.1-1' }}
               </p>
 
               <p class="produto-preco">
-                {{ produto.price | currency:'USD':'symbol':'1.2-2' }}
+                {{ produto.price | moedaReal }}
               </p>
+
+              <p
+                class="produto-estoque"
+                [appEstoque]="produto.stock">
+
+                @if (produto.stock <= 0) {
+                  Sem estoque
+                } @else if (produto.stock <= 5) {
+                  Últimas unidades: {{ produto.stock }}
+                } @else {
+                  Em estoque: {{ produto.stock }}
+                }
+
+              </p>
+
+              <button
+                class="adicionar-carrinho-button"
+                type="button"
+                (click)="$event.stopPropagation(); adicionarAoCarrinho(produto)">
+
+                <span>🛒</span>
+
+                Adicionar ao carrinho
+
+              </button>
 
             </div>
 
           </article>
+
         }
 
       </section>
+
     }
 
     @if (!carregando && !erro && produtos.length === 0) {
+
       <div class="mensagem-estado">
-        <p>Nenhum produto encontrado.</p>
+
+        <div class="estado-icone">⌕</div>
+
+        <h2>Nenhum produto encontrado.</h2>
+
+        <p>
+          Tente pesquisar por outro nome ou selecionar uma categoria diferente.
+        </p>
+
       </div>
+
     }
 
   </main>
+
+  <app-rodape></app-rodape>
 
 </ion-content>

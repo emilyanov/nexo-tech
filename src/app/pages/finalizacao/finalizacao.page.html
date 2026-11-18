@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/carrinho"
+        text="Voltar">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Finalizar compra</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <main class="finalizacao-container">
+
+    <section class="finalizacao-header">
+      <span class="section-tag">NEXO TECH</span>
+      <h1>Finalizar compra</h1>
+      <p>Confira os dados do seu pedido antes de confirmar.</p>
+    </section>
+
+    @if (itens$ | async; as itens) {
+
+      @if (itens.length > 0) {
+
+        <div class="finalizacao-layout">
+
+          <section class="pedido-container">
+            <h2>Resumo dos produtos</h2>
+
+            @for (item of itens; track item.produto.id) {
+              <article class="pedido-card">
+
+                <img
+                  [src]="item.produto.thumbnail"
+                  [alt]="item.produto.title">
+
+                <div class="pedido-info">
+                  <h3>{{ item.produto.title }}</h3>
+
+                  <p>Quantidade: {{ item.quantidade }}</p>
+
+                  <strong>
+                    {{ item.produto.price * item.quantidade | currency:'USD':'symbol':'1.2-2' }}
+                  </strong>
+                </div>
+
+              </article>
+            }
+
+          </section>
+
+          <aside class="resumo-finalizacao">
+            <h2>Resumo do pedido</h2>
+
+            <div class="resumo-linha">
+              <span>Quantidade de itens</span>
+              <strong>{{ obterQuantidade() }}</strong>
+            </div>
+
+            <div class="resumo-total">
+              <span>Total da compra</span>
+              <strong>
+                {{ obterTotal() | currency:'USD':'symbol':'1.2-2' }}
+              </strong>
+            </div>
+
+            <button
+              class="confirmar-button"
+              type="button"
+              (click)="confirmarCompra()">
+              Confirmar pedido
+            </button>
+
+            <p class="aviso">
+              Esta é uma simulação de compra para fins acadêmicos.
+            </p>
+          </aside>
+
+        </div>
+
+      } @else {
+
+        <section class="pedido-vazio">
+          <h2>Não há produtos para finalizar</h2>
+          <p>Adicione produtos ao carrinho antes de continuar.</p>
+
+          <a routerLink="/catalogo">
+            Voltar ao catálogo
+          </a>
+        </section>
+
+      }
+
+    }
+
+  </main>
+</ion-content>

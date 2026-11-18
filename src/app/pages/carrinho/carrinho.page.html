@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/catalogo"
+        text="Voltar">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Meu carrinho</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <main class="carrinho-container">
+
+    <section class="carrinho-header">
+      <span class="section-tag">NEXO TECH</span>
+      <h1>Meu carrinho</h1>
+      <p>Confira os produtos selecionados para sua compra.</p>
+    </section>
+
+    @if (itens$ | async; as itens) {
+      @if (itens.length > 0) {
+
+        <div class="carrinho-layout">
+
+          <section class="carrinho-produtos">
+
+            @for (item of itens; track item.produto.id) {
+              <article class="carrinho-card">
+
+                <div class="produto-imagem">
+                  <img
+                    [src]="item.produto.thumbnail"
+                    [alt]="item.produto.title">
+                </div>
+
+                <div class="produto-info">
+
+                  <span class="produto-categoria">
+                    {{ item.produto.category }}
+                  </span>
+
+                  <h2>{{ item.produto.title }}</h2>
+
+                  <p class="produto-preco">
+                    {{ item.produto.price | moedaReal }}
+                  </p>
+
+                  <div class="quantidade-controle">
+
+                    <button
+                      type="button"
+                      (click)="diminuirQuantidade(item)">
+                      −
+                    </button>
+
+                    <span>{{ item.quantidade }}</span>
+
+                    <button
+                      type="button"
+                      [disabled]="item.quantidade >= item.produto.stock"
+                      (click)="aumentarQuantidade(item)">
+                      +
+                    </button>
+
+                  </div>
+
+                  <button
+                    class="remover-button"
+                    type="button"
+                    (click)="removerProduto(item.produto.id)">
+                    Remover produto
+                  </button>
+
+                </div>
+
+              </article>
+            }
+
+          </section>
+
+          <aside class="resumo-compra">
+
+            <h2>Resumo da compra</h2>
+
+            <div class="resumo-linha">
+              <span>Quantidade de itens</span>
+              <strong>{{ obterQuantidade() }}</strong>
+            </div>
+
+            <div class="resumo-linha">
+              <span>Subtotal</span>
+              <strong>
+                {{ obterTotal() | moedaReal }}
+              </strong>
+            </div>
+
+            <div class="resumo-total">
+              <span>Total</span>
+              <strong>
+                {{ obterTotal() | moedaReal }}
+              </strong>
+            </div>
+
+            <a
+              class="finalizar-button"
+              routerLink="/finalizacao">
+              Finalizar compra
+            </a>
+
+            <button
+              class="limpar-button"
+              type="button"
+              (click)="limparCarrinho()">
+              Limpar carrinho
+            </button>
+
+          </aside>
+
+        </div>
+
+      } @else {
+
+        <section class="carrinho-vazio">
+
+          <div class="carrinho-vazio-icon">🛒</div>
+
+          <h2>Seu carrinho está vazio</h2>
+
+          <p>Você ainda não adicionou nenhum produto.</p>
+
+          <a routerLink="/catalogo">
+            Explorar produtos
+          </a>
+
+        </section>
+
+      }
+    }
+
+  </main>
+</ion-content>

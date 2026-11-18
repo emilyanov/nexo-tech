@@ -1,23 +1,9 @@
-<ion-header class="main-header">
-  <ion-toolbar>
-    <div class="header-content">
-      <div class="brand">
-        <div class="brand-icon">N</div>
-        <span>NEXO<span class="brand-highlight">TECH</span></span>
-      </div>
-
-      <ion-button fill="clear" class="cart-button">
-        <ion-icon name="cart-outline"></ion-icon>
-      </ion-button>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-cabecalho></app-cabecalho>
 
 <ion-content [fullscreen]="true">
 
   <main class="home-container">
 
-    <!-- Carrossel principal -->
     <section class="hero-section">
 
       @for (banner of banners; track $index) {
@@ -36,9 +22,18 @@
               {{ banner.descricao }}
             </p>
 
-            <ion-button class="hero-button">
+            <ion-button
+              class="hero-button"
+              routerLink="/catalogo"
+              [queryParams]="banner.categoria ? { categoria: banner.categoria } : null">
+
               {{ banner.botao }}
-              <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+
+              <ion-icon
+                name="arrow-forward-outline"
+                slot="end">
+              </ion-icon>
+
             </ion-button>
 
           </div>
@@ -49,14 +44,19 @@
         <ion-icon name="hardware-chip-outline"></ion-icon>
       </div>
 
-      <!-- Navegação -->
       <div class="carousel-controls">
 
-        <ion-button fill="clear" class="carousel-arrow" (click)="slideAnterior()">
+        <ion-button
+          fill="clear"
+          class="carousel-arrow"
+          (click)="slideAnterior()">
+
           <ion-icon name="chevron-back-outline"></ion-icon>
+
         </ion-button>
 
         <div class="carousel-indicators">
+
           @for (banner of banners; track $index) {
             <button
               class="indicator"
@@ -64,17 +64,22 @@
               (click)="selecionarSlide($index)">
             </button>
           }
+
         </div>
 
-        <ion-button fill="clear" class="carousel-arrow" (click)="proximoSlide()">
+        <ion-button
+          fill="clear"
+          class="carousel-arrow"
+          (click)="proximoSlide()">
+
           <ion-icon name="chevron-forward-outline"></ion-icon>
+
         </ion-button>
 
       </div>
 
     </section>
 
-    <!-- Categorias -->
     <section class="categories-section">
 
       <div class="section-heading">
@@ -86,57 +91,200 @@
 
       <div class="categories-grid">
 
-        <div class="category-card">
+        <a
+          routerLink="/catalogo"
+          [queryParams]="{ categoria: 'laptops' }"
+          class="category-card">
+
           <ion-icon name="laptop-outline"></ion-icon>
+
           <h3>Notebooks</h3>
+
           <span>Desempenho e produtividade</span>
-        </div>
 
-        <div class="category-card">
+        </a>
+
+        <a
+          routerLink="/catalogo"
+          [queryParams]="{ categoria: 'smartphones' }"
+          class="category-card">
+
           <ion-icon name="phone-portrait-outline"></ion-icon>
+
           <h3>Smartphones</h3>
+
           <span>Tecnologia na sua mão</span>
-        </div>
 
-        <div class="category-card">
+        </a>
+
+        <a
+          routerLink="/catalogo"
+          [queryParams]="{ categoria: 'tablets' }"
+          class="category-card">
+
           <ion-icon name="tablet-portrait-outline"></ion-icon>
-          <h3>Tablets</h3>
-          <span>Versatilidade e mobilidade</span>
-        </div>
 
-        <div class="category-card">
+          <h3>Tablets</h3>
+
+          <span>Versatilidade e mobilidade</span>
+
+        </a>
+
+        <a
+          routerLink="/catalogo"
+          [queryParams]="{ categoria: 'mobile-accessories' }"
+          class="category-card">
+
           <ion-icon name="headset-outline"></ion-icon>
+
           <h3>Acessórios</h3>
+
           <span>Complete sua experiência</span>
-        </div>
+
+        </a>
 
       </div>
 
     </section>
 
-    <!-- Destaques -->
     <section class="featured-section">
 
       <div class="section-heading">
+
         <div>
           <span class="section-subtitle">SELEÇÃO NEXO TECH</span>
           <h2>Produtos em destaque</h2>
         </div>
 
-        <span class="coming-soon">EM BREVE</span>
+        <a routerLink="/catalogo" class="ver-todos">
+
+          Ver todos
+
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+
+        </a>
+
       </div>
 
-      <div class="featured-placeholder">
-        <ion-icon name="cube-outline"></ion-icon>
-        <h3>Novidades chegando!</h3>
-        <p>
-          Estamos preparando uma seleção especial de produtos
-          para você.
-        </p>
-      </div>
+      @if (carregandoDestaques) {
+        <div class="featured-placeholder">
+
+          <ion-icon name="cube-outline"></ion-icon>
+
+          <h3>Carregando produtos...</h3>
+
+          <p>Estamos preparando nossas novidades para você.</p>
+
+        </div>
+      }
+
+      @if (erroDestaques) {
+        <div class="featured-placeholder">
+
+          <h3>Ops! Algo deu errado.</h3>
+
+          <p>{{ erroDestaques }}</p>
+
+          <ion-button (click)="carregarDestaques()">
+            Tentar novamente
+          </ion-button>
+
+        </div>
+      }
+
+      @if (!carregandoDestaques && !erroDestaques && produtosDestaque.length > 0) {
+
+        <div class="featured-grid">
+
+          @for (produto of produtosDestaque; track produto.id) {
+
+            <article class="featured-card">
+
+              <a
+                [routerLink]="['/produto', produto.id]"
+                class="featured-image">
+
+                @if (produto.discountPercentage > 0) {
+                  <span class="discount-badge">
+                    -{{ produto.discountPercentage | number:'1.0-0' }}%
+                  </span>
+                }
+
+                <img
+                  [src]="produto.thumbnail"
+                  [alt]="produto.title"
+                  loading="lazy">
+
+              </a>
+
+              <div class="featured-info">
+
+                <span class="featured-category">
+                  {{ produto.category }}
+                </span>
+
+                <a
+                  [routerLink]="['/produto', produto.id]"
+                  class="featured-title">
+
+                  {{ produto.title }}
+
+                </a>
+
+                <div class="featured-rating">
+
+                  <ion-icon name="star-outline"></ion-icon>
+
+                  <span>
+                    {{ produto.rating | number:'1.1-1' }}
+                  </span>
+
+                </div>
+
+                <div class="featured-price">
+
+                  <strong>
+                    {{ produto.price | moedaReal }}
+                  </strong>
+
+                </div>
+
+                <div class="featured-actions">
+
+                  <ion-button
+                    fill="outline"
+                    class="details-button"
+                    [routerLink]="['/produto', produto.id]">
+
+                    Detalhes
+
+                  </ion-button>
+
+                  <ion-button
+                    class="add-cart-button"
+                    (click)="adicionarAoCarrinho(produto)"
+                    aria-label="Adicionar ao carrinho">
+
+                    <ion-icon name="cart-outline"></ion-icon>
+
+                  </ion-button>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      }
 
     </section>
 
   </main>
+
+  <app-rodape></app-rodape>
 
 </ion-content>

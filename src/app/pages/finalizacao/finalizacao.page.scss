@@ -1,0 +1,313 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-content {
+  --background: #0b1120;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #0b1120;
+    --color: #f8fafc;
+    --border-color: #263449;
+  }
+}
+
+ion-back-button {
+  --color: #22d3ee;
+}
+
+.finalizacao-container {
+  width: 100%;
+  max-width: 1500px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 45px 5%;
+}
+
+.finalizacao-header {
+  margin-bottom: 40px;
+
+  .section-tag {
+    color: #22d3ee;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  h1 {
+    margin: 12px 0;
+    color: #f8fafc;
+    font-size: 36px;
+    font-weight: 800;
+  }
+
+  p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+
+.finalizacao-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 30px;
+  align-items: start;
+}
+
+.pedido-container,
+.resumo-finalizacao {
+  padding: 28px;
+  background: #151f32;
+  border: 1px solid #263449;
+  border-radius: 16px;
+}
+
+.pedido-container {
+  h2 {
+    margin: 0 0 20px;
+    color: #f8fafc;
+    font-size: 21px;
+    font-weight: 700;
+  }
+}
+
+.pedido-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 20px 0;
+  border-bottom: 1px solid #263449;
+  transition: background 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  img {
+    flex-shrink: 0;
+    width: 115px;
+    height: 115px;
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 12px;
+    object-fit: contain;
+  }
+}
+
+.pedido-info {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 12px;
+    color: #f8fafc;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0 0 12px;
+    color: #94a3b8;
+    font-size: 14px;
+  }
+
+  strong {
+    color: #22d3ee;
+    font-size: 17px;
+    font-weight: 700;
+  }
+}
+
+.resumo-finalizacao {
+  position: sticky;
+  top: 20px;
+
+  h2 {
+    margin: 0 0 25px;
+    color: #f8fafc;
+    font-size: 21px;
+    font-weight: 700;
+  }
+}
+
+.resumo-linha,
+.resumo-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  span {
+    color: #94a3b8;
+    font-size: 14px;
+  }
+
+  strong {
+    color: #f8fafc;
+    font-size: 14px;
+  }
+}
+
+.resumo-total {
+  padding-top: 20px;
+  border-top: 1px solid #263449;
+
+  span,
+  strong {
+    color: #22d3ee;
+    font-size: 19px;
+    font-weight: 800;
+  }
+}
+
+.confirmar-button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 16px;
+  color: #0b1120;
+  background: #22d3ee;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:hover {
+    background: #67e8f9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(34, 211, 238, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.aviso {
+  margin: 16px 0 0;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.pedido-vazio {
+  padding: 55px 25px;
+  background: #151f32;
+  border: 1px solid #263449;
+  border-radius: 16px;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 12px;
+    color: #f8fafc;
+    font-size: 22px;
+  }
+
+  p {
+    color: #94a3b8;
+    font-size: 15px;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 14px 24px;
+    color: #0b1120;
+    background: #22d3ee;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s;
+
+    &:hover {
+      background: #67e8f9;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .finalizacao-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo-finalizacao {
+    position: static;
+  }
+}
+
+@media (max-width: 550px) {
+  .finalizacao-container {
+    padding: 28px 15px;
+  }
+
+  .finalizacao-header {
+    margin-bottom: 28px;
+
+    h1 {
+      font-size: 29px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .pedido-container,
+  .resumo-finalizacao {
+    padding: 20px;
+  }
+
+  .pedido-card {
+    align-items: flex-start;
+    gap: 13px;
+    padding: 16px 0;
+
+    img {
+      width: 85px;
+      height: 85px;
+    }
+  }
+
+  .pedido-info {
+    h3 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+
+    strong {
+      font-size: 15px;
+    }
+  }
+
+  .resumo-total {
+    span,
+    strong {
+      font-size: 17px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .pedido-card {
+    flex-direction: column;
+
+    img {
+      width: 100%;
+      height: 150px;
+    }
+  }
+}

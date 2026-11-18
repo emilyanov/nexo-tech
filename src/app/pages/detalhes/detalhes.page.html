@@ -1,46 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-
-    <ion-buttons slot="start">
-      <ion-back-button
-        defaultHref="/catalogo"
-        text="Voltar"
-      ></ion-back-button>
-    </ion-buttons>
-
-    <ion-title>Detalhes do produto</ion-title>
-
-  </ion-toolbar>
-</ion-header>
+<app-cabecalho></app-cabecalho>
 
 <ion-content [fullscreen]="true">
 
   <main class="detalhes-container">
 
+    <a routerLink="/catalogo" class="voltar-catalogo">
+      ← Voltar ao catálogo
+    </a>
+
     @if (carregando) {
-      <div class="mensagem-estado">
-        <p>Carregando detalhes do produto...</p>
+      <div class="estado-carregamento">
+        <p>Carregando produto...</p>
       </div>
     }
 
     @if (erro) {
-      <div class="mensagem-estado erro">
+      <div class="estado-erro">
         <p>{{ erro }}</p>
+
+        <a routerLink="/catalogo">
+          Voltar ao catálogo
+        </a>
       </div>
     }
 
     @if (produto; as item) {
 
-      <section class="produto-detalhes">
+      <section class="detalhes-card">
 
-        <div class="produto-imagem">
+        <div class="detalhes-imagem">
           <img
             [src]="item.thumbnail"
-            [alt]="item.title"
-          >
+            [alt]="item.title">
         </div>
 
-        <div class="produto-informacoes">
+        <div class="detalhes-info">
 
           <span class="produto-categoria">
             {{ item.category }}
@@ -48,29 +42,47 @@
 
           <h1>{{ item.title }}</h1>
 
-          <p class="produto-avaliacao">
-            ★ {{ item.rating }} / 5
-          </p>
+          <div class="produto-avaliacao">
+            ★ Avaliação: {{ item.rating }} / 5
+          </div>
 
           <p class="produto-descricao">
             {{ item.description }}
           </p>
 
           <div class="produto-preco">
-            {{ item.price | currency:'USD':'symbol':'1.2-2' }}
+            {{ item.price | moedaReal }}
           </div>
 
-          <div class="produto-extra">
+          <div class="produto-disponibilidade">
+            @if (item.stock > 0) {
+              <span>Em estoque: {{ item.stock }} unidades</span>
+            } @else {
+              <span>Produto indisponível</span>
+            }
+          </div>
 
-            <p>
-              <strong>Marca:</strong>
-              {{ item.brand || 'Não informada' }}
-            </p>
+          <div class="produto-acoes">
 
-            <p>
-              <strong>Estoque:</strong>
-              {{ item.stock }} unidades
-            </p>
+            <button
+              class="adicionar-button"
+              type="button"
+              [disabled]="item.stock <= 0"
+              (click)="adicionarAoCarrinho(item)">
+
+              🛒 Adicionar ao carrinho
+
+            </button>
+
+            <button
+              class="comprar-button"
+              type="button"
+              [disabled]="item.stock <= 0"
+              (click)="comprarAgora(item)">
+
+              Comprar agora
+
+            </button>
 
           </div>
 
@@ -81,5 +93,17 @@
     }
 
   </main>
+
+  <app-rodape></app-rodape>
+
+  <ion-toast
+    [isOpen]="toastAberto"
+    [message]="mensagemToast"
+    duration="2500"
+    position="bottom"
+    color="dark"
+    cssClass="toast-nexo"
+    (didDismiss)="toastAberto = false">
+  </ion-toast>
 
 </ion-content>

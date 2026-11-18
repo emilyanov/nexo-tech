@@ -1,0 +1,54 @@
+<ion-header class="cabecalho">
+  <ion-toolbar>
+
+    <div class="cabecalho-container">
+
+      <a routerLink="/home" class="logo">
+        <span class="logo-icone">N</span>
+        <span class="logo-texto">NEXO<span>TECH</span></span>
+      </a>
+
+      <nav class="navegacao">
+
+        <a
+          routerLink="/home"
+          routerLinkActive="ativo"
+          [routerLinkActiveOptions]="{ exact: true }">
+          Início
+        </a>
+
+        <a
+          routerLink="/catalogo"
+          routerLinkActive="ativo">
+          Catálogo
+        </a>
+
+      </nav>
+
+      <div class="acoes-cabecalho">
+
+        <a
+          routerLink="/carrinho"
+          class="carrinho-button"
+          aria-label="Abrir carrinho">
+
+          <ion-icon name="cart-outline"></ion-icon>
+
+          <span>Carrinho</span>
+
+          @if (carrinhoService.itens$ | async; as itens) {
+            @if (itens.length > 0) {
+              <span class="carrinho-contador">
+                {{ carrinhoService.obterQuantidadeItens() }}
+              </span>
+            }
+          }
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </ion-toolbar>
+</ion-header>

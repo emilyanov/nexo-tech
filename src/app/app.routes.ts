@@ -18,4 +18,31 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'carrinho',
+    loadComponent: () => import('./pages/carrinho/carrinho.page').then((m) => m.CarrinhoPage),
+  },
+  {
+    path: 'carrinho',
+    loadComponent: () => import('./pages/carrinho/carrinho.page').then((m) => m.CarrinhoPage),
+  },
+  {
+    path: 'finalizacao',
+    loadComponent: () => import('./pages/finalizacao/finalizacao.page').then((m) => m.FinalizacaoPage),
+  },
+  {
+    path: 'finalizacao',
+    loadComponent: () => import('./pages/finalizacao/finalizacao.page').then((m) => m.FinalizacaoPage),
+  },
+  {
+    path: 'confirmacao',
+    loadComponent: () => import('./pages/confirmacao/confirmacao.page').then((m) => m.ConfirmacaoPage),
+  },
+  {
+    path: 'confirmacao',
+    loadComponent: () =>
+      import('./pages/confirmacao/confirmacao.page').then(
+        (m) => m.ConfirmacaoPage
+      ),
+  },  
 ];
